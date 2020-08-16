@@ -3,10 +3,13 @@ package _06_Pixel_Art_Save_State;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.Serializable;
 
 import javax.swing.JPanel;
 
-public class GridPanel extends JPanel{
+// Note - JPanel already implements the Serializable class
+// https://docs.oracle.com/javase/7/docs/api/javax/swing/JPanel.html
+public class GridPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private int windowWidth;

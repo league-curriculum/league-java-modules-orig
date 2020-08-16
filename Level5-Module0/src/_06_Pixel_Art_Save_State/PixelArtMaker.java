@@ -21,6 +21,7 @@ public class PixelArtMaker implements MouseListener, ActionListener {
     private GridPanel gp;
     ColorSelectionPanel csp;
     JButton save;
+    JButton load;
     private final String SAVE_FILE_LOCATION = "src/_06_Pixel_Art_Save_State/saveState.dat";
 
     public void start() {
@@ -30,6 +31,9 @@ public class PixelArtMaker implements MouseListener, ActionListener {
         window.setResizable( false );
         save = new JButton( "Save" );
         save.addActionListener( this );
+        
+        load = new JButton("load");
+        load.addActionListener(this);
 
         window.add( gip );
         window.pack();
@@ -37,23 +41,32 @@ public class PixelArtMaker implements MouseListener, ActionListener {
         window.setVisible( true );
     }
 
-    public void submitGridData(int w, int h, int r, int c) {
-        gp = new GridPanel( w, h, r, c );
-
-        if( new File( SAVE_FILE_LOCATION ).exists() ) {
-            gp = load();
-        }
-
+    public void setupGrid() {
         csp = new ColorSelectionPanel();
         window.remove( gip );
         window.add( gp );
         window.add( csp );
         window.add( save );
+        window.add( load );
         gp.repaint();
         gp.addMouseListener( this );
         window.pack();
     }
-
+    
+    public void loadGridData() {
+        if( new File( SAVE_FILE_LOCATION ).exists() ) {
+            gp = load();
+            setupGrid();
+        } else {
+        	System.out.println( "ERROR: No file located at: " + SAVE_FILE_LOCATION);
+        }
+    }
+    
+    public void submitGridData(int w, int h, int r, int c) {
+        gp = new GridPanel( w, h, r, c );
+        setupGrid();
+    }
+    
     public static void main(String[] args) {
         new PixelArtMaker().start();
     }
@@ -85,6 +98,9 @@ public class PixelArtMaker implements MouseListener, ActionListener {
     public void actionPerformed(ActionEvent arg0) {
         if( arg0.getSource() == this.save ) {
             saveState( gp );
+        } else if( arg0.getSource() == this.load ) {
+        	window.getContentPane().removeAll();
+        	loadGridData();
         }
     }
 
@@ -92,7 +108,7 @@ public class PixelArtMaker implements MouseListener, ActionListener {
         boolean success = false;
 
         try( FileOutputStream fos = new FileOutputStream( new File( SAVE_FILE_LOCATION ) );
-                ObjectOutputStream oos = new ObjectOutputStream( fos ) ) {
+            ObjectOutputStream oos = new ObjectOutputStream( fos ) ) {
             oos.writeObject( grid );
             System.out.println( "Saving file: " + SAVE_FILE_LOCATION );
             success = true;
@@ -107,7 +123,7 @@ public class PixelArtMaker implements MouseListener, ActionListener {
         GridPanel savedGrid = null;
 
         try( FileInputStream fis = new FileInputStream( new File( SAVE_FILE_LOCATION ) );
-                ObjectInputStream ois = new ObjectInputStream( fis ) ) {
+            ObjectInputStream ois = new ObjectInputStream( fis ) ) {
             savedGrid = (GridPanel)ois.readObject();
             System.out.println( "Loading file: " + SAVE_FILE_LOCATION );
         } catch( IOException e ) {

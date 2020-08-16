@@ -1,5 +1,6 @@
 package _06_Pixel_Art_Save_State;
 
+import java.io.File;
 import java.io.Serializable;
 
 import javax.swing.JButton;
@@ -8,13 +9,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GridInputPanel extends JPanel implements Serializable {
+public class GridInputPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField windowWidthField;
 	private JTextField windowHeightField;
 	private JTextField rowsField;
 	private JTextField colsField;
 	private JButton submitButton;
+	
+	private JButton loadButton;
 			
 	PixelArtMaker pam;
 	
@@ -27,6 +30,8 @@ public class GridInputPanel extends JPanel implements Serializable {
 		colsField = new JTextField(5);
 		submitButton = new JButton("Submit");
 		
+		loadButton = new JButton("Load");
+		
 		add(new JLabel("screen width:"));
 		add(windowWidthField);
 		add(new JLabel("\tscreen height:"));
@@ -36,6 +41,9 @@ public class GridInputPanel extends JPanel implements Serializable {
 		add(new JLabel("\ttotal columns:"));
 		add(colsField);
 		add(submitButton);
+		
+		add(loadButton);
+		loadButton.addActionListener((e)->pam.loadGridData());
 		
 		submitButton.addActionListener((e)->submit());
 	}
