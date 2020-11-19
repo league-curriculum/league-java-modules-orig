@@ -2,168 +2,217 @@ package _02_Chat_Application;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Stack;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-
-/*
- * Using the Click_Chat example, write an application that allows a server computer to chat with a client computer.
- */
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
-public class ChatApp extends JFrame implements KeyListener {
+public class ChatApp implements KeyListener {
     static final int WIDTH = 400;
     static final int HEIGHT = 300;
-    JPanel panel = new JPanel();
-    JLabel label = new JLabel();
-    JTextField textField = new JTextField();
-    Stack<Character> typedChars = new Stack<Character>();
+
+    boolean isServer;
+    ServerSocket serverSocket = null;
+    int port = 8080;
+
+    Client client = null;
+    ArrayList<Server> servers = null;
+    Boolean previousMessageIncoming = null;
+
+    Font textFieldFont = new Font( "Arial", Font.PLAIN, 18 );
     String message = "";
     String oldMessages = "<html>";
-    boolean isServer = true;
-
-    Server server;
-    Client client;
+    JFrame frame = new JFrame();
+    JPanel panel = new JPanel();
+    JTextField textField = new JTextField();
+    JTextPane area = new JTextPane();
+    JScrollPane scroll = new JScrollPane( area, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED );
 
     public static void main(String[] args) {
         new ChatApp();
     }
 
     public ChatApp() {
+        this.servers = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
         int response = JOptionPane.showConfirmDialog( null, "Would you like to host a connection?", "Buttons!",
                 JOptionPane.YES_NO_OPTION );
 
         if( response == JOptionPane.YES_OPTION ) {
-            server = new Server( this, 8080 );
-            setTitle( "SERVER" );
-            JOptionPane.showMessageDialog( null,
-                    "Server started at: " + server.getIPAddress() + "\nPort: " + server.getPort() );
+            isServer = true;            
 
-            isServer = true;
-            
-            // Setup frame
-            setVisible( true );
-            setSize( WIDTH, HEIGHT );
-            setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-            
-            // Setup panel
-            panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
-            panel.setPreferredSize( new Dimension( WIDTH, HEIGHT ) );
-            add( panel );
-
-            // Setup label and text field
-            label.setPreferredSize( new Dimension( WIDTH, ( HEIGHT * 3 ) / 4 ) );
-            textField.setPreferredSize( new Dimension( WIDTH, HEIGHT / 4 ) );
-            textField.setBorder( BorderFactory.createLineBorder( Color.GREEN, 2 ) );
-            textField.addKeyListener( this );
-            panel.add( label );
-            panel.add( textField );
-
-            server.start();
-
-        } else {
-            setTitle( "CLIENT" );
-            String ipStr = JOptionPane.showInputDialog( "Enter the IP Address" );
-            String prtStr = JOptionPane.showInputDialog( "Enter the port number" );
-            int port = Integer.parseInt( prtStr );
-            client = new Client( this, ipStr, port );
-
-            isServer = false;
-
-            // Setup frame
-            setVisible( true );
-            setSize( WIDTH, HEIGHT );
-            setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-            
-            // Setup panel
-            panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
-            panel.setPreferredSize( new Dimension( WIDTH, HEIGHT ) );
-            add( panel );
-
-            // Setup label and textfield
-            label.setPreferredSize( new Dimension( WIDTH, ( HEIGHT * 3 ) / 4 ) );
-            textField.setPreferredSize( new Dimension( WIDTH, HEIGHT / 4 ) );
-            textField.setBorder( BorderFactory.createLineBorder( Color.GREEN, 2 ) );
-            textField.addKeyListener( this );
-            panel.add( label );
-            panel.add( textField );
-            
-            client.start();
-        }
-    }
-    
-    public void addMessageToLabel( boolean isIncomingMessage, String message ) {
-        
-        if( isIncomingMessage ) {
-            
-            // Incoming messages are indented and colored red
-            oldMessages += "<blockquote>" + "<font color='red'>" + message + "</font>" + "</blockquote>";
-            
-        } else {
-            
-            // If not the first message, then a new line may need to be added
-            if( !oldMessages.equals( "<html>" ) ) {
-                String blockquoteTag = "";
+            try {
+                this.serverSocket = new ServerSocket( port, 100 );
+                setupServerApp();
                 
-                if( oldMessages.length() > "</blockquote>".length() ) {
-                    blockquoteTag = oldMessages.substring( oldMessages.length() - "</blockquote>".length() );
-                }
-                
-                System.out.println( blockquoteTag );
-                
-                // No new line needed if the last message was a blockquote
-                if( !blockquoteTag.equals( "</blockquote>" ) ) {
-                    oldMessages += "<br>";
+                String date = formatter.format( LocalDateTime.now() );
+                System.out.println( date + " - Server started at: " + "Port " + port );
+            } catch( IOException e1 ) {
+                e1.printStackTrace();
+            }
+
+            // Stay in loop and handle any incoming connections from clients
+            while( this.serverSocket != null ) {
+                try {
+                    // This instruction blocks/listens until a connection from the client
+                    Socket socket = this.serverSocket.accept();
+
+                    // Connection is made, start a new server thread
+                    Server server = new Server( this, socket );
+                    this.servers.add( server );
+                    server.start();
+
+                } catch( Exception e ) {
+                    e.printStackTrace();
                 }
             }
+        } else {
+            isServer = false;
+
+            setupClientApp();
+            client = new Client( this, Server.getIPAddress(), this.port );
+            client.start();
             
-            // User messages are blue
-            oldMessages += "<font color='blue'>" + message + "</font>";
+            String date = formatter.format( LocalDateTime.now() );
+            System.out.println( date + " - Client started at: " + Server.getIPAddress() + ", Port: " + port );
+        }
+    }
+
+    private void setupServerApp() {
+        frame.setTitle( "SERVER" );
+        setupWindow();
+    }
+
+    private void setupClientApp() {
+        frame.setTitle( "CLIENT" );
+        setupWindow();
+    }
+
+    private void setupWindow() {
+        // Setup frame
+        frame.setVisible( true );
+        frame.setSize( ChatApp.WIDTH, ChatApp.HEIGHT );
+        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+
+        // Setup panel
+        panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ) );
+        panel.setPreferredSize( new Dimension( ChatApp.WIDTH, ChatApp.HEIGHT ) );
+        frame.add( panel );
+
+        // Setup label and text field
+        area.setEditable( true );
+        // area.setLineWrap(true);
+        area.setFont( new Font( "Arial", Font.BOLD, 12 ) );
+        scroll.setPreferredSize( new Dimension( ChatApp.WIDTH, ( ChatApp.HEIGHT * 3 ) / 4 ) );
+
+        textField.setFont( textFieldFont );
+        textField.setPreferredSize( new Dimension( ChatApp.WIDTH, ChatApp.HEIGHT / 4 ) );
+        textField.setBorder( BorderFactory.createLineBorder( Color.GREEN, 2 ) );
+        textField.addKeyListener( this );
+
+        panel.add( scroll );
+        panel.add( textField );
+
+        frame.pack();
+    }
+
+    public void addMessageToWindow(boolean isIncomingMessage, String message) {
+        message = message + "\n";
+        
+        // Add new line to separate server and client message blocks
+        if( previousMessageIncoming != null && previousMessageIncoming != isIncomingMessage ) {
+            appendToPane( area, "\n", Color.WHITE );
         }
         
-        // Update the message history on the JLabel
-        label.setText( oldMessages + "</html>" );
+        previousMessageIncoming = isIncomingMessage;
+        
+        if( isIncomingMessage ) {
+            int hex = 0xFF0000;              // Red
+            int r = (hex & 0xFF0000) >> 16;
+            int g = (hex & 0xFF00) >> 8;
+            int b = (hex & 0xFF);
+            int alpha = 127;
+            appendToPane( area, message, new Color( r, g, b, alpha ) );
+        } else {
+            int hex = 0x0000FF;              // Blue
+            int r = (hex & 0xFF0000) >> 16;
+            int g = (hex & 0xFF00) >> 8;
+            int b = (hex & 0xFF);
+            int alpha = 127;
+            appendToPane( area, "          ", Color.WHITE );
+            appendToPane( area, message, new Color( r, g, b, alpha ) );
+        }
+        
+        frame.pack();
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
+    private void appendToPane(JTextPane tp, String message, Color bgColor) {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        AttributeSet aset = sc.addAttribute( SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.BLACK );
 
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-
+        aset = sc.addAttribute( aset, StyleConstants.FontFamily, "Arial" );
+        aset = sc.addAttribute( aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED );
+        aset = sc.addAttribute( aset, StyleConstants.Background, bgColor );
+        aset = sc.addAttribute( aset, StyleConstants.FontSize, 18 );
+        
+        int len = tp.getDocument().getLength();
+        tp.setCaretPosition( len );
+        tp.setCharacterAttributes( aset, false );
+        tp.replaceSelection( message );
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        System.out.println( keyCode );
-
         if( keyCode == KeyEvent.VK_ENTER ) {
             message = textField.getText();
 
-            addMessageToLabel( false, message );
+            addMessageToWindow( false, message );
 
             if( isServer ) {
-                server.sendMessage( message );
+                // Send messages to all clients
+                for( Server server : servers ) {
+                    server.sendMessage( message );
+                }
             } else {
                 client.sendMessage( message );
             }
 
+            // Reset
             message = "";
             textField.setText( "" );
         }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent arg0) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void keyTyped(KeyEvent arg0) {
+        // TODO Auto-generated method stub
     }
 }

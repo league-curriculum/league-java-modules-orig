@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-import javax.swing.JOptionPane;
-
-public class Client {
+public class Client extends Thread {
     private String ip;
     private int port;
 
@@ -18,20 +15,20 @@ public class Client {
     ObjectInputStream is;
 
     ChatApp chatApp;
-
+    
     public Client(ChatApp app, String ip, int port) {
         this.chatApp = app;
         this.ip = ip;
         this.port = port;
     }
 
-    public void start() {
+    public void run() {
+        
         try {
             connection = new Socket( ip, port );
 
             os = new ObjectOutputStream( connection.getOutputStream() );
             is = new ObjectInputStream( connection.getInputStream() );
-
             os.flush();
 
         } catch( Exception e ) {
@@ -41,7 +38,7 @@ public class Client {
         while( connection.isConnected() ) {
             try {
                 String message = (String)is.readObject();
-                this.chatApp.addMessageToLabel( true, message );
+                chatApp.addMessageToWindow( true, message );
             } catch( Exception e ) {
                 e.printStackTrace();
             }

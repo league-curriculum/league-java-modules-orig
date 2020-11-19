@@ -1,69 +1,55 @@
 package _02_Chat_Application;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-public class Server {
-    private int port;
-
-    private ServerSocket server;
+public class Server extends Thread {
     private Socket connection;
+    private ChatApp chatApp;
+    private ObjectOutputStream os;
+    private ObjectInputStream is;
 
-    ObjectOutputStream os;
-    ObjectInputStream is;
-
-    ChatApp chatApp;
-
-    public Server(ChatApp app, int port) {
+    public Server(ChatApp app, Socket socket) {
         this.chatApp = app;
-        this.port = port;
+        this.connection = socket;
     }
 
-    public void start() {
+    public void run() {
+
         try {
-            server = new ServerSocket( port, 100 );
-
-            // This instruction blocks until a connection from the client
-            connection = server.accept();
-
-            os = new ObjectOutputStream( connection.getOutputStream() );
-            is = new ObjectInputStream( connection.getInputStream() );
+            os = new ObjectOutputStream( this.connection.getOutputStream() );
+            is = new ObjectInputStream( this.connection.getInputStream() );
 
             os.flush();
-
-            while( connection.isConnected() ) {
-                try {
-                    String message = (String)is.readObject();
-                    this.chatApp.addMessageToLabel( true, message );
-                } catch( EOFException e ) {
-                    JOptionPane.showMessageDialog( null, "Connection Lost" );
-                    System.exit( 0 );
-                }
-            }
-
         } catch( Exception e ) {
             e.printStackTrace();
         }
+
+        while( connection.isConnected() ) {
+            try {
+                // This method blocks until there is data to read 
+                String message = (String)is.readObject();
+                
+                chatApp.addMessageToWindow( true, message );
+            } catch( ClassNotFoundException | IOException e ) {
+                JOptionPane.showMessageDialog( null, "Connection Lost" );
+                e.printStackTrace();
+            }
+        }
     }
 
-    public String getIPAddress() {
+    public static String getIPAddress() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch( UnknownHostException e ) {
             return "ERROR!!!!!";
         }
-    }
-
-    public int getPort() {
-        return port;
     }
 
     public void sendMessage(String message) {
