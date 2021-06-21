@@ -67,19 +67,19 @@ public class MazeMaker {
     private static void removeWalls(Cell c1, Cell c2) {
         if (c1.getRow() == c2.getRow()) {
             if (c1.getCol() > c2.getCol()) {
-                c1.setNorthWall(false);
-                c2.setSouthWall(false);
-            } else {
-                c2.setNorthWall(false);
-                c1.setSouthWall(false);
-            }
-        } else {
-            if (c1.getRow() > c2.getRow()) {
                 c1.setWestWall(false);
                 c2.setEastWall(false);
             } else {
-                c2.setWestWall(false);
                 c1.setEastWall(false);
+                c2.setWestWall(false);
+            }
+        } else {
+            if (c1.getRow() > c2.getRow()) {
+                c1.setNorthWall(false);
+                c2.setSouthWall(false);
+            } else {
+                c1.setSouthWall(false);
+                c2.setNorthWall(false);
             }
         }
     }
