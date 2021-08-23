@@ -5,7 +5,7 @@ package _03_animals_original;
  * 
  * 2. Look at the Dog and Cat classes to familiarize yourself with the code.
  * 
- * 3. Go look at theAnimalRunner class in the _06_animals_inheritance package.
+ * 3. Go look at theAnimalRunner class in the _04_animals_inheritance package.
  */
 public class AnimalRunner {
 	public static void main(String[] args) {
