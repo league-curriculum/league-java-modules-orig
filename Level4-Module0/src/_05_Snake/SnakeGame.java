@@ -102,8 +102,6 @@ public class SnakeGame implements ActionListener, KeyListener {
          * KeyEvent.VK_UP.
          * 
          * If an arrow key is pressed, set the snake's direction accordingly.
-         * 
-         * If the space key is pressed, call the snake's feed method.
          */
 
         switch (e.getKeyCode()) {
