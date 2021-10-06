@@ -1,4 +1,4 @@
-package _06_Meeting_Scheduler;
+package _07_Meeting_Scheduler;
 
 public class MeetingScheduler {
     /*

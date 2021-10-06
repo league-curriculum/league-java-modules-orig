@@ -1,10 +1,10 @@
-package _05_Intro_To_Hash_Maps;
+package _06_Intro_To_Hash_Maps;
 
 
 public class _02_LogSearch {
-    /* 
+    /*
      * Crate a HashMap of Integers for the keys and Strings for the values.
-     * Create a GUI with three buttons. 
+     * Create a GUI with three buttons.
      * Button 1: Add Entry
      *      When this button is clicked, use an input dialog to ask the user
      *      to enter an ID number.
@@ -31,7 +31,7 @@ public class _02_LogSearch {
      *      When this button is clicked, prompt the user to enter an ID using
      *      an input dialog.
      *      If this ID exists in the HashMap, remove it. Otherwise, notify the
-     *      user that the ID is not in the list. 
+     *      user that the ID is not in the list.
      */
 
 }

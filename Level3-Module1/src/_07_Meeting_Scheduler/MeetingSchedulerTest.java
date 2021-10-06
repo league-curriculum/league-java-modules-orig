@@ -1,6 +1,6 @@
-package _06_Meeting_Scheduler;
+package _07_Meeting_Scheduler;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /*
- * Put all your code in the meeting scheduler and make the tests below pass! 
+ * Put all your code in the meeting scheduler and make the tests below pass!
  */
 class MeetingSchedulerTest {
     Schedule boss;
