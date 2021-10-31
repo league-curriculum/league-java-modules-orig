@@ -16,6 +16,21 @@ public class EncapsulationDemo {
 
     public static void main(String[] args) {
 
+        Car car = new Car(10, 5, "blue", 39.5);
+        System.out.println(car.getMpg());
+        System.out.println(car.color);
+        System.out.println(car.getFuelInTank());
+        System.out.println(car.getTankCapacity());
+        car.drive();
+        
+        SUV suv = new SUV(5, 4, "yellow", 18.3, 0);
+        System.out.println(suv.getMpg());
+        System.out.println(suv.color);
+        System.out.println(suv.getFuelInTank());
+        System.out.println(suv.getTankCapacity());
+        suv.drive();
+        suv.offroad();
+
     }
 
 }
@@ -61,12 +76,13 @@ class Car {
      * accessed by subclasses outside the current package.
      */
 
-    int mpg;
+   private double mpg;
 
-    public Car(double tankCapacity, double fuelInTank, String color, int mpg) {
+    public Car(double tankCapacity, double fuelInTank, String color,
+            double mpg) {
 
         this.tankCapacity = tankCapacity;
-        this.fuelInTank = fuelInTank;
+        setFuelInTank(fuelInTank);
         this.color = color;
         this.mpg = mpg;
 
@@ -119,7 +135,7 @@ class Car {
 
     }
 
-    public double gettankCapacity() {
+    public double getTankCapacity() {
 
         return tankCapacity;
     }
@@ -127,12 +143,16 @@ class Car {
     protected void drive() {
 
         if (fuelInTank()) {
-            System.out.println("I'm driving my " + color + "car...");
+            System.out.println("I'm driving my " + color + " car...");
             setFuelInTank(fuelInTank - 1);
         } else {
             System.out.println("I'm out of gas.");
         }
 
+    }
+    
+    public double getMpg() {
+        return mpg;
     }
 
 }
@@ -141,7 +161,7 @@ class SUV extends Car {
 
     private int numSeats;
 
-    public SUV(double tankCapacity, double fuelInTank, String color, int mpg,
+    public SUV(double tankCapacity, double fuelInTank, String color, double mpg,
             int numSeats) {
 
         super(tankCapacity, fuelInTank, color, numSeats);
@@ -162,7 +182,7 @@ class SUV extends Car {
 
     }
 
-    private void offroad() {
+    public void offroad() {
 
         drive();
 

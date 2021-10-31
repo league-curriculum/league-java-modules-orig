@@ -3,6 +3,8 @@ package _06_Card_Game;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class CardDealer extends Player {
 
     private ArrayList<Card> deck;
@@ -20,6 +22,8 @@ public class CardDealer extends Player {
     }
 
     public void openNewDeck() {
+        
+        JOptionPane.showMessageDialog(null, "Opening a new deck...");
 
         deck = new ArrayList<>();
 
@@ -89,7 +93,7 @@ public class CardDealer extends Player {
         
     }
     
-    public boolean needNewDeck() {
+    public boolean needsNewDeck() {
         return deck.size() <= cut;
     }
     

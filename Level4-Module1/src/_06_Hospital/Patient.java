@@ -12,7 +12,7 @@ public class Patient {
         setFeelsCaredFor(true);
     }
 
-    public boolean getFeelsCaredFor() {
+    public boolean isFeelsCaredFor() {
         return feelsCaredFor;
     }
 

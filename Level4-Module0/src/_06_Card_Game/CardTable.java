@@ -7,56 +7,51 @@ import javax.swing.JOptionPane;
 
 public class CardTable {
 
-    static ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Player> players;
 
-    static CardDealer dealer = new CardDealer("Dealer");
+    private CardDealer dealer;
+    
+    public CardTable() {
+        
+        JOptionPane.showMessageDialog(null, "Welcome to Blackjack!");
+        setPlayers(new ArrayList<>());
+        setDealer(new CardDealer("Dealer"));
+        
+    }
 
     public static void main(String[] args) {
+        
+        CardTable table = new CardTable();
+        ArrayList<Player> players = table.getPlayers();
+        CardDealer dealer = table.getDealer();  
 
-        JOptionPane.showMessageDialog(null, "Welcome to Blackjack!");
-
-        addPlayers();
+        table.addPlayers();
 
         while (players.size() > 0) {
 
-            if (dealer.needNewDeck()) {
-                JOptionPane.showMessageDialog(null, "Opening a new deck...");
+            if (dealer.needsNewDeck()) {
                 dealer.openNewDeck();
             }
 
             dealer.dealCardsToAll(players);
 
-            if (dealerHas21()) {
+            if (table.dealerHas21()) {
 
                 continue;
             }
 
-            playerTurn();
+            table.playerTurn();
 
-            dealerTurn();
+            table.dealerTurn();
 
-            showFinalResults();
+            table.showFinalResults();
 
-            for (Iterator<Player> iterator = players.iterator(); iterator
-                    .hasNext();) {
-
-                Player player = (Player) iterator.next();
-
-                String response = JOptionPane.showInputDialog(
-                        player.getName() + ", do you want to continue?(Y/N)");
-
-                if (response.equalsIgnoreCase("N")) {
-                    iterator.remove();
-                }
-
-            }
-
-            dealer.clearCards(players);
+            table.askIfPlayersAreContinuing();
         }
 
     }
 
-    public static void addPlayers() {
+    public void addPlayers() {
 
         boolean addingPlayers = true;
 
@@ -73,20 +68,20 @@ public class CardTable {
 
             } else {
 
-                players.add(new Player(playerName));
+                getPlayers().add(new Player(playerName));
 
             }
 
         }
     }
 
-    static boolean dealerHas21() {
-        if (dealer.getTotal() == 21) {
+    public boolean dealerHas21() {
+        if (getDealer().getTotal() == 21) {
             String result = "";
 
             result += "Dealer has a 21\n";
 
-            for (Player player : players) {
+            for (Player player : getPlayers()) {
 
                 if (player.getTotal() == 21) {
                     result += "\n\n" + player.getName() + " gets even money!";
@@ -97,7 +92,7 @@ public class CardTable {
 
             JOptionPane.showMessageDialog(null, result);
 
-            for (Iterator<Player> iterator = players.iterator(); iterator
+            for (Iterator<Player> iterator = getPlayers().iterator(); iterator
                     .hasNext();) {
 
                 Player player = (Player) iterator.next();
@@ -111,7 +106,7 @@ public class CardTable {
 
             }
 
-            dealer.clearCards(players);
+            getDealer().clearCards(getPlayers());
 
             return true;
         }
@@ -120,10 +115,10 @@ public class CardTable {
 
     }
 
-    static void playerTurn() {
-        for (int i = 0; i < players.size(); i++) {
+   public void playerTurn() {
+        for (int i = 0; i < getPlayers().size(); i++) {
 
-            Player currentPlayer = players.get(i);
+            Player currentPlayer = getPlayers().get(i);
 
             boolean hitting = true;
 
@@ -133,17 +128,17 @@ public class CardTable {
                         + "!";
 
                 query += "\n\nThe dealer's upcard is a(n) "
-                        + dealer.getUpCard();
+                        + getDealer().getUpCard();
 
-                for (int j = 0; j < players.size(); j++) {
+                for (int j = 0; j < getPlayers().size(); j++) {
 
-                    if (j == 0 && players.size() > 1) {
+                    if (j == 0 && getPlayers().size() > 1) {
                         query += "\n\nYour fellow players' upcards are: \n";
                     }
 
-                    if (!players.get(j).equals(currentPlayer)) {
+                    if (!getPlayers().get(j).equals(currentPlayer)) {
 
-                        Player opponent = players.get(j);
+                        Player opponent = getPlayers().get(j);
 
                         query += "\n" + opponent.getName() + " - "
                                 + opponent.getUpCard();
@@ -164,7 +159,7 @@ public class CardTable {
                 String response = JOptionPane.showInputDialog(query);
 
                 if (response.equalsIgnoreCase("hit")) {
-                    dealer.dealCardToOnePlayer(currentPlayer);
+                    getDealer().dealCardToOnePlayer(currentPlayer);
                 } else {
                     hitting = false;
                     break;
@@ -174,52 +169,52 @@ public class CardTable {
         }
     }
 
-    public static void dealerTurn() {
+    public void dealerTurn() {
         boolean dealerTurn = true;
 
         while (dealerTurn) {
 
-            String dealerStatus = "Dealer's hand " + dealer.getHand();
-            dealerStatus += "\nDealer's total is " + dealer.getTotal();
+            String dealerStatus = "Dealer's hand " + getDealer().getHand();
+            dealerStatus += "\nDealer's total is " + getDealer().getTotal();
 
             JOptionPane.showMessageDialog(null, dealerStatus);
 
-            if (dealer.isBusted()) {
+            if (getDealer().isBusted()) {
                 JOptionPane.showMessageDialog(null, "Dealer busted!");
                 dealerTurn = false;
                 break;
-            } else if (dealer.getTotal() >= 17) {
+            } else if (getDealer().getTotal() >= 17) {
                 JOptionPane.showMessageDialog(null, "Dealer stays!");
                 dealerTurn = false;
                 break;
             }
 
-            dealer.dealCardToOnePlayer(dealer);
+            getDealer().dealCardToOnePlayer(getDealer());
         }
     }
-    
-    public static void showFinalResults() {
+
+    public void showFinalResults() {
         String result = "Final totals:";
 
-        result += "\n" + dealer.getTotal() + " - " + dealer.getName();
+        result += "\n" + getDealer().getTotal() + " - " + getDealer().getName();
 
-        for (int j = 0; j < players.size(); j++) {
+        for (int j = 0; j < getPlayers().size(); j++) {
 
-            Player currentPlayer = players.get(j);
+            Player currentPlayer = getPlayers().get(j);
 
             result += "\n" + currentPlayer.getTotal() + " - "
                     + currentPlayer.getName();
 
             if (currentPlayer.isBusted()
-                    || (currentPlayer.getTotal() < dealer.getTotal()
-                            && !dealer.isBusted())) {
+                    || (currentPlayer.getTotal() < getDealer().getTotal()
+                            && !getDealer().isBusted())) {
 
                 result += " loses!";
 
             } else {
 
-                if ((dealer.isBusted()
-                        || currentPlayer.getTotal() > dealer.getTotal())) {
+                if ((getDealer().isBusted()
+                        || currentPlayer.getTotal() > getDealer().getTotal())) {
 
                     result += " wins!";
 
@@ -231,7 +226,47 @@ public class CardTable {
             }
 
         }
-        
+
         JOptionPane.showMessageDialog(null, result);
+    }
+
+    public void askIfPlayersAreContinuing() {
+
+        for (Iterator<Player> iterator = getPlayers().iterator(); iterator
+                .hasNext();) {
+
+            Player player = (Player) iterator.next();
+
+            String response = JOptionPane.showInputDialog(
+                    player.getName() + ", do you want to continue?(Y/N)");
+
+            if (response.equalsIgnoreCase("N")) {
+                iterator.remove();
+            }
+
+        }
+
+        getDealer().clearCards(getPlayers());
+        
+        if(players.size() == 0) {
+            JOptionPane.showMessageDialog(null, "Thanks for playing!");
+        }
+
+    }
+
+    public CardDealer getDealer() {
+        return dealer;
+    }
+
+    public void setDealer(CardDealer dealer) {
+        this.dealer = dealer;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 }
