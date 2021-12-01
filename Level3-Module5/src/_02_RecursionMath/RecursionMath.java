@@ -6,7 +6,7 @@ public class RecursionMath {
         // If times is 1 
             // Return number 
 
-        // Else return number + recursionMultiplication(number, times-1)
+        // Else return number + recursiveMultiplication(number, times-1)
 
         return 0;
     }
@@ -14,7 +14,7 @@ public class RecursionMath {
     // Try this one on your own! 
     // Hint: if numberToDivideBy is bigger than number,
     //       you can't divide anymore
-    public static int recursiveDivision(int number, int numberToDevideBy) {
+    public static int recursiveDivision(int number, int numberToDivideBy) {
         
         return 0;
     }
