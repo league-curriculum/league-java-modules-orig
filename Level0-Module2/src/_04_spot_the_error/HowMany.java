@@ -13,7 +13,7 @@ public class HowMany {
 		System.out.println(number);
 	}
 	
-	int getRandomNumber() {
+	public static int getRandomNumber() {
 		Random random = new Random();
 		int number = random.nextInt(100)+1;
 		return number;

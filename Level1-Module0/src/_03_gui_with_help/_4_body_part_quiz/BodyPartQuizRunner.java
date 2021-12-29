@@ -1,4 +1,4 @@
-package _02_gui_with_help._4_body_part_quiz;
+package _03_gui_with_help._4_body_part_quiz;
 
 /*
  *    Copyright (c) The League of Amazing Programmers 2013-2021
