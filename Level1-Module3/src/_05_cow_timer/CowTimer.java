@@ -1,4 +1,4 @@
-package _06_cow_timer;
+package _05_cow_timer;
 /*
  *    Copyright (c) The League of Amazing Programmers 2013-2019
  *    Level 1
