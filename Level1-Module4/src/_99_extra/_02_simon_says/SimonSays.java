@@ -1,4 +1,4 @@
-package _02_simon_says;
+package _99_extra._02_simon_says;
 
 /*
  *    Copyright (c) The League of Amazing Programmers 2013-2019
@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
 import java.io.IOException;
 
 public class SimonSays extends KeyAdapter {
-
 	HashMap<Integer, String> images = new HashMap<Integer, String>();
 	private int imageIndex;
 	private int tries = 0;

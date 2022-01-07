@@ -1,4 +1,4 @@
-package _06_cow_timer;
+package _05_cow_timer;
 
 public class CowTimerRunner {
 	public static void main(String[] args) throws InterruptedException {
