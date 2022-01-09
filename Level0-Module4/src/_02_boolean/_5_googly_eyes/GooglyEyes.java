@@ -57,7 +57,7 @@ public class GooglyEyes extends PApplet {
 
     }
 
-    static public void main(String[] passedArgs) {
+    static public void main(String[] args) {
         PApplet.main(GooglyEyes.class.getName());
     }
 }

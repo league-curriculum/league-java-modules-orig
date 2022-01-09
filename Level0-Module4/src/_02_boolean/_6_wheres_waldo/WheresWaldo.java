@@ -55,10 +55,12 @@ public class WheresWaldo extends PApplet {
 
     @Override
     public void draw() {
-        
+        if(mousePressed) {
+            playDoh();
+        }
     }
 
-    static public void main(String[] passedArgs) {
+    static public void main(String[] args) {
         PApplet.main(WheresWaldo.class.getName());
     }
 
@@ -67,35 +69,43 @@ public class WheresWaldo extends PApplet {
     Clip clip = null;
 
     public void playDoh() {
-        playSound("homer-doh.wav");
+        if (clip == null || !clip.isActive()) {
+            clip = playSound("homer-doh.wav");
+        }
     }
 
     public void playWhoohoo() {
-        playSound("homer-woohoo.wav");
+        if (clip == null || !clip.isActive()) {
+            clip = playSound("homer-woohoo.wav");
+        }
     }
 
-    public void playSound(String fileName) {
+    public Clip getSong(String fileName) {
         String path = "src/";
+        Clip clip = null;
 
-        if (clip != null && clip.isActive()) {
-            clip.stop();
-        }
-        
+        // Note: use .wav files
         try {
             clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(path + fileName));
             clip.open(inputStream);
         } catch (Exception e) {
-            System.out.println("play sound error: " + e.getMessage() + " for " + path + fileName);
+            System.out.println("ERROR: " + e.getMessage() + " for " + path + fileName);
         }
 
-        // Note: use .wav files
+        return clip;
+    }
+
+    public Clip playSound(String fileName) {
+        final Clip clip = getSong(fileName);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 clip.start();
             }
         }).start();
-    }
 
+        return clip;
+    }
 }
