@@ -55,9 +55,7 @@ public class WheresWaldo extends PApplet {
 
     @Override
     public void draw() {
-        if(mousePressed) {
-            playDoh();
-        }
+        
     }
 
     static public void main(String[] args) {
