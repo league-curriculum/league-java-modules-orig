@@ -8,7 +8,7 @@ public class _00_StringMethodsDemo {
      * directly modify or change them. Java provides methods that indirectly
      * modify a String by returning a new String object with the modifications.
      * 
-     * Below are some common modifications to Strings 
+     * Below are some common modifications to Strings
      */
     public static void main(String[] args) {
         String str = "Welcome to Java";
@@ -50,7 +50,7 @@ public class _00_StringMethodsDemo {
         index = str.indexOf('o', index+1);
         System.out.println("\'o\' 2nd appearance at index: " + index + " in '" + str + "'");
         
-        // Replacing characters from a string
+        // Replacing ALL characters from a string
         String replacedStr = str.replace(' ', '_');
         System.out.println("Replaced ' ' with '_': " + replacedStr);
         
@@ -68,8 +68,9 @@ public class _00_StringMethodsDemo {
         String convertedStr = new String(strChars);
         System.out.println("char[] to string: " + convertedStr);
         
-        // Find the number of times a substring (or letter) appears in a string
-        // Method #1
+        // Find the number of times a substring (or character) appears in a string
+        // Method #1: starting from the first character on the left, keep
+        //            searching for the character until the end of the string
         String substring = "to";
         int numOccurances = 0;
         index = str.indexOf("to");
@@ -81,11 +82,13 @@ public class _00_StringMethodsDemo {
         System.out.println("1. The substring '" + substring + "' appeared: " + numOccurances +
                            " times in the string '" + str + "'");
         
-        // Find the number of times a substring (or letter) appears in a string
-        // Method #2
+        // Find the number of times a substring (or character) appears in a string
+        // Method #2: remove the substring, get the number of characters,
+        //            removed, then divide by the number of characters in the
+        //            substring
         substring = "to";
-        words = str.split(substring);
-        numOccurances = words.length - 1;
+        String removedSubstring = str.replace(substring, "");
+        numOccurances = (str.length() - removedSubstring.length()) / substring.length();
         
         System.out.println("2. The substring '" + substring + "' appeared: " + numOccurances +
                            " times in the string '" + str + "'");

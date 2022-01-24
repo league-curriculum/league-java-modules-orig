@@ -20,25 +20,38 @@ public class _00_HashMapDemo {
         /*
          * Getting a value from a key
          */
-        System.out.println("The student at #35413 is: ");
+        System.out.print("The student at #35413 is: ");
         System.out.println(studentRoster.get(35413));
 
         /*
-         * Iterating through all values with a for-each loop
+         * Getting the size (number of key-value pairs)
          */
-        System.out.println("\nAll the vales:");
+        System.out.println("\nNumber of entries: " + studentRoster.size());
+        
+        /*
+         * Iterating through all values with a for-each loop
+         * NOTE: It's not possible to get the key from a value. This is
+         * because different keys can be associated with the same value.
+         */
+        System.out.println("\nAll the values:");
         for(String s : studentRoster.values()){
             System.out.println(s);
         }
-
+        
         /*
-         * Iterating through all keys with a for-each loop
+         * Updating the value of an existing key
+         * NOTE: there are the same number of entries. This is because
+         * duplicate keys in a hash map are NOT allowed.
          */
-        System.out.println("\nAll the keys:");
+        System.out.println("\nChanging key 84565 to: Zany Zapper");
+        studentRoster.put(84565, "Zany Zapper");
+        
+        /*
+         * Iterating through all keys and values with a for-each loop
+         */
+        System.out.println("\nAll the key-value pairs:");
         for(Integer i : studentRoster.keySet()){
-            System.out.println(i);
+            System.out.println("key: " + i + ", value: " + studentRoster.get(i));
         }
-
-        System.out.println(Math.sqrt(3));
     }
 }

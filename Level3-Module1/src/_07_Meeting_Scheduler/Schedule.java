@@ -26,6 +26,14 @@ public class Schedule {
         return weeklyAvailability;
     }
     
+    public void printSchedule() {
+        System.out.println("+---------+----------");
+        for( String dayOfWeek : weeklyAvailability.keySet() ) {
+            System.out.println("|" + String.format("%-9s", dayOfWeek) + "| " + weeklyAvailability.get(dayOfWeek));
+        }
+        System.out.println("+---------+----------");
+    }
+    
     public void addAvailability( String day, Integer startTime ){
         String dayOfTheWeek = day;
         
