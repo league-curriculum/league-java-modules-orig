@@ -8,16 +8,17 @@ import reactor.core.publisher.Mono;
 
 /*
 In a broad sense, an Application Programming Interface (API) is an interface that defines the interactions that are
-possible with an applications.  In practice, you can think of Web API as a list of request that can be made to another application over
-the internet, which result in retrieving data, or manipulating the data managed by that application.  For example, the Cheetah Search API allows
-people to send a request, and receive information about books.  Having your the applications you write utilize APIs opens
-a whole world of possibilities, allowing you to take advantage of the vast amounts of data and services present on the internet.
-At this point we will focus on simply retrieving data from an API, but some APIs also allow users to change the data that is stored
-by that service.
+possible between two applications.  In practice, you can think of API as a list of request that can be made to another
+application over the internet, which result in retrieving data, or manipulating the data managed by that application.
+For example, the Cheetah Search API allows people to send a request, and receive information about books.  Utilizing
+APIs opens a whole world of possibilities, allowing you to take advantage of the vast amounts of data and services
+present on the internet.
+
+At this point we will focus on simply retrieving data from an API, but some APIs also allow users to change the data
+that is stored by that service.
 
 The documentation for the Cheetah Search API can be found here:
 https://cheetah.api.jointheleague.org
-
 This API was created by the Cheetah class at the League of Amazing Programmers, for their level 7 project.
  */
 
