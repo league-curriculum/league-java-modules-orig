@@ -1,4 +1,4 @@
-package _02_Chat_Application;
+package _07_chat_application;
 
 /*
  * Using the Click_Chat example, write an application that allows a server computer to chat with a client computer.

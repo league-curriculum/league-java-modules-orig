@@ -1,7 +1,6 @@
-package _01_Intro_To_Sockets.server;
+package _06_intro_to_sockets.server;
 
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
 
 public class ServerGreeter extends Thread {
 	//1. Create an object of the ServerSocket class
@@ -10,11 +9,12 @@ public class ServerGreeter extends Thread {
 		//2. Initialize the ServerSocket object. In the parameters,
 		//   you must define the port at which the server will listen for connections.
 		
-		//*OPTIONAL* you can set a time limit for the server to wait by using the 
+		//*OPTIONAL* you can set a time limit for the server to wait by using the
 		//  ServerSocket's setSoTimeout(int timeInMilliSeconds) method
 	}
 
-	public void run() {
+	@Override
+    public void run() {
 		//3. Create a boolean variable and initialize it to true.
 		
 		//4. Make a while loop that continues looping as long as the boolean created in the previous step is true.
