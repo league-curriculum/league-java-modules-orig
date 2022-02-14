@@ -1,21 +1,14 @@
 package _04_Searching_With_Streams;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.stream.Stream;
-
 public class StreamSearcher {
-	// 1. This method takes an array of Strings and a String. The method returns the number
-	// of times the String parameter appears in the String array. This method will
-	// use Streams to help us out.
-	public long containsCount(String[] strArr, String strToCount) {
-		//2. Convert the String array to a stream
-		
-		//3. Use the filter method with a lambda to remove all the String
-		//   elements that do not match the String parameter.
-		
-		//4. Return the count of the filtered stream.
-		
-		return 0;
-	}
+    /*
+     * Use stream methods to return the number of times a string appears
+     * in the array of strings.
+     *
+     * The filter() and count() stream methods may be useful here.
+     */
+    public long containsCount(String[] strArr, String strToCount) {
+        
+        return 0;
+    }
 }

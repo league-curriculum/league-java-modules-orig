@@ -28,7 +28,6 @@ https://github.com/League-level5/Level5-Module0.git
 https://github.com/League-level5/Level5-Module1.git
 https://github.com/League-level5/Level5-Module2.git
 https://github.com/LEAGUE-Level6/Level6_Module0.git
-https://github.com/LEAGUE-Level6/DiscordBot_v2.git
 https://github.com/League-level2/Simple_Collision_Demo.git
 https://github.com/League-level5/Level5-Module3.git
 https://github.com/League-level5/Level5-Module4.git

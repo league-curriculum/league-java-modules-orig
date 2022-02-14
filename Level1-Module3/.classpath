@@ -5,6 +5,7 @@
 	<classpathentry kind="lib" path="TokenHacker.jar"/>
 	<classpathentry kind="lib" path="src/gridworld.jar"/>
 	<classpathentry kind="lib" path="src/javazoom.jar"/>
+	<classpathentry kind="lib" path="game_tools_0.1.2.jar"/>
 	<classpathentry kind="lib" path="core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

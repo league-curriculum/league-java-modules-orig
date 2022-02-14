@@ -1,4 +1,4 @@
-package arrays;
+package extra;
 
 import processing.core.PApplet;
 
