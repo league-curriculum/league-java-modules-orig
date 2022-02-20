@@ -46,7 +46,7 @@ public class CatFactsApi {
 
 
         /*
-        Use could use http://www.jsonschema2pojo.org/ to generate your POJO
+        You could use http://www.jsonschema2pojo.org/ to generate your POJO
         and place it in the cat_facts_API.data_transfer_objects package.
         Select:
         Class name: CatWrapper
