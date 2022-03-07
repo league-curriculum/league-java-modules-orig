@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="en_us.jar"/>
 	<classpathentry kind="lib" path="freetts-jsapi10.jar"/>
 	<classpathentry kind="lib" path="freetts.jar"/>
+	<classpathentry kind="lib" path="game_tools_0.1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

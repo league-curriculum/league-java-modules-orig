@@ -1,4 +1,4 @@
-package _03_jeopardy;
+package _02_jeopardy;
 
 
 /*
@@ -14,12 +14,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.URL;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -28,6 +24,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import game_tools.Sound;
 
 
 /* Check out the Jeopardy Handout to see what the end result should look like: http://bit.ly/1bvnvd4 */
@@ -40,7 +38,7 @@ public class Jeopardy implements ActionListener {
 	private int score = 0;
 	private JLabel scoreBox = new JLabel("0");
 	private int buttonCount = 0;
-	private Clip jeopardyThemeClip;
+	private Sound jeopardyThemeClip;
 
 
 
@@ -81,7 +79,7 @@ public class Jeopardy implements ActionListener {
 		 /*
 		 * [optional] Use the showImage or playSound methods when the user answers a
 		 * question
-		 */		
+		 */
 		
 		frame.pack();
 		quizPanel.setLayout(new GridLayout(buttonCount + 1, 3));
@@ -104,7 +102,8 @@ public class Jeopardy implements ActionListener {
 		return new JButton("temporary button");
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	@Override
+    public void actionPerformed(ActionEvent e) {
 		
 		// Remove this temporary message after testing:
 		JOptionPane.showMessageDialog(null, "pressed " + ((JButton) e.getSource()).getText() + " button");
@@ -131,7 +130,7 @@ public class Jeopardy implements ActionListener {
 		// Remove this temporary message and replace it with a pop-up that asks the user the question
 		JOptionPane.showMessageDialog(null, "this is where the question will be asked");
 		
-		// Stop the theme music when they have entered their response. 
+		// Stop the theme music when they have entered their response.
 		
 		// If the answer is correct
 
@@ -150,21 +149,13 @@ public class Jeopardy implements ActionListener {
 	}
 
 	public void playJeopardyTheme() {
-		String fileName = "src/_03_jeopardy/jeopardy.wav";
-		// Note: use .wav files
-		try {
-			jeopardyThemeClip = AudioSystem.getClip();
-			AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(fileName));
-			jeopardyThemeClip.open(inputStream);
-			jeopardyThemeClip.start();
-		} catch (Exception e) {
-			System.out.println("play sound error: " + e.getMessage() + " for " + fileName);
-		}
+		String fileName = "_02_jeopardy/jeopardy.wav";
+		jeopardyThemeClip = new Sound(fileName);
+		jeopardyThemeClip.play();
 	}
 
 	public void stopJeopardyTheme() {
 		jeopardyThemeClip.stop();
-
 	}
 
 	private Component makeScorePanel() {

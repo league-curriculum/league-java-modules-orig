@@ -1,4 +1,4 @@
-package _06_book_of_illusions;
+package _04_book_of_illusions;
 
 /*
  *    Copyright (c) The League of Amazing Programmers 2013-2019

@@ -25,7 +25,7 @@ import javax.swing.JTextField;
  *     decimal value: 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
  * 
  * Hex values are prefixed with a 0x in code,
- *      int hex = 0x1F;     // 31 decimal, 1 1111 1111 binary
+ *      int hex = 0x1F;     // 31 decimal, 11111 binary
  * 
  * Since each hex digit can be 16 different characters, 1 byte can be expressed
  * as 2 hex characters. All 3 int variables below are the same value.

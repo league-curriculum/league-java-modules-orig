@@ -1,4 +1,4 @@
-package _13_lights_out;
+package _11_lights_out;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;

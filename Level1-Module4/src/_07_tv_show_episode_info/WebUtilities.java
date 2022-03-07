@@ -1,4 +1,4 @@
-package _09_tv_show_episode_info;
+package _07_tv_show_episode_info;
 
 import java.io.IOException;
 import java.io.InputStream;

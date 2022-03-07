@@ -5,12 +5,12 @@
 	<classpathentry kind="lib" path="TokenHacker.jar"/>
 	<classpathentry kind="lib" path="core.jar"/>
 	<classpathentry kind="lib" path="jlayer-1.0.1.jar"/>
+	<classpathentry kind="lib" path="game_tools_0.1.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/_01_methods/_1_houses/robot.jar"/>
-	<classpathentry kind="lib" path="game_tools_0.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

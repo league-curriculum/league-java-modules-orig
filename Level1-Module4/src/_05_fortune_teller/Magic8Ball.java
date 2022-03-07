@@ -1,4 +1,4 @@
-package _07_fortune_teller;
+package _05_fortune_teller;
 /*
  *    Copyright (c) The League of Amazing Programmers 2013-2019
  *    Level 1

@@ -1,4 +1,4 @@
-package _03_jeopardy;
+package _02_jeopardy;
 
 /*
  *    Copyright (c) The League of Amazing Programmers 2013-2019

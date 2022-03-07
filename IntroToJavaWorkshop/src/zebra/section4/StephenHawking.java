@@ -1,7 +1,5 @@
 package zebra.section4;
 
-import javax.swing.JOptionPane;
-
 public class StephenHawking {
 	
 	// 1. make a main method and put steps 2, 3, 4 and 5 inside it
@@ -10,7 +8,7 @@ public class StephenHawking {
 		//    Example: String sentence = "My favorite food is broccoli!";
 		
 		
-		// 3. Use the speak() method and pass it the sentence. Then run your program.  Do you hear it?
+		// 3. Use the Sound.speak() method and pass it the sentence. Then run your program.  Do you hear it?
 		
 		// 4. Change the code you wrote in step 2 to ask the user for a sentence.
 		// hint: JOptionPane.showInputDialog("Write something here!");
@@ -18,33 +16,4 @@ public class StephenHawking {
 		
 		// 5. Make steps 3 repeat a BUNCH OF TIMES (hint: use a while loop)
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	/* Don't change this. */
-	static void speak(String words) {
-		
-		if (System.getProperty("os.name").contains("Windows")) {
-			String cmd = "PowerShell -Command \"Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('"
-					+ words + "');\"";
-			try {
-				Runtime.getRuntime().exec(cmd).waitFor();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			try {
-				Runtime.getRuntime().exec("say " + words).waitFor();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
 }
