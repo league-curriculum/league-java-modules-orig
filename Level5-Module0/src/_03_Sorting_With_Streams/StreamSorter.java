@@ -6,11 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-<<<<<<< HEAD
-import java.util.stream.IntStream;
-=======
 import java.util.stream.Collectors;
->>>>>>> df8eace4919e068a985369b73a480744d8aadc7f
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -23,22 +19,6 @@ import org.junit.jupiter.api.Test;
  *    Use the .collect(Collectors.toList()) stream method to return a list
  */
 public class StreamSorter {
-<<<<<<< HEAD
-	public static void main(String[] args) {
-		Integer[] nums = new Integer[50];
-		for(int i = 0; i < nums.length; i++) {
-			Random rGen = new Random();
-			nums[i] = rGen.nextInt();
-		}
-		int number = IntStream.range(0, 500).sum();
-		//1. Convert the Integer array to Stream object.
-		
-		//2. Use the sorted method of the stream to sort the numbers.
-		
-		//3. Use the forEach method with a lambda to print all the elements of the sorted Stream.
-		//   They should be in ascending order.
-	}
-=======
 
     int[] sortArray(int[] arr) {
         return null;
@@ -84,18 +64,4 @@ public class StreamSorter {
         assertEquals(list.get(4), "strings");
         assertEquals(list.get(5), "these");
     }
->>>>>>> df8eace4919e068a985369b73a480744d8aadc7f
 }
-
-// 0. Lambdas and Streams
-	// Better explanations and examples
-// 1. Binary Numbers and Operations
-	//  Intro to binary
-	//  Encrypt & Decrypt, 
-	//  Robot interface, (Daniel has ideas)
-// 2. File IO
-//     
-// 3. Threads
-// 4. Sockets/API - setup server - 
-//     Central Socket Server ( Mike has code)
-

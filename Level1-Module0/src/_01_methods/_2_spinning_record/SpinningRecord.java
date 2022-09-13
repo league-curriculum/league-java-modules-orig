@@ -5,11 +5,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 /*
-<<<<<<< HEAD
  * Goal: Ok DJ! Make your own turn tables!
-=======
- * Goal: Make a record spin and play music!
->>>>>>> df8eace4919e068a985369b73a480744d8aadc7f
  * 
  * 1. Make an int variable to keep track of how much the record will spin.
  * 
