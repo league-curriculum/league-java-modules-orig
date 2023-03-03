@@ -1,4 +1,4 @@
-package _01_methods._4_magic_worms.MagicWorms;
+package _01_methods._4_magic_worms;
 
 import processing.core.PApplet;
 

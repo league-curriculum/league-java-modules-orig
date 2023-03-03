@@ -23,7 +23,7 @@ import game_tools.GameControlScene;
  * where,
  *      lightsOnOff = 0b01010001    // blue, yellow, and pink are on
  *      lightsOnOff = 0x28          // orange and black are on
- *      lightsOnOff = 65            // green and cyan are on
+ *      lightsOnOff = 65            // pink and blue are on
  * 
  * The code is implemented correctly if the light pattern matches the pattern
  * in the LightSwitches.gif file in this folder.
