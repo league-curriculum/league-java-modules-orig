@@ -37,11 +37,6 @@
             <version>5.2.7.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.projectreactor</groupId>
-            <artifactId>reactor-spring</artifactId>
-            <version>1.0.1.RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>io.projectreactor.netty</groupId>
             <artifactId>reactor-netty</artifactId>
             <version>0.9.9.RELEASE</version>
