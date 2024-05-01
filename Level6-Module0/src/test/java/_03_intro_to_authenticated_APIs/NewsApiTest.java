@@ -1,11 +1,10 @@
 package _03_intro_to_authenticated_APIs;
 
-import static org.junit.Assert.assertTrue;
-
+import _03_intro_to_authenticated_APIs.data_transfer_objects.ApiExampleWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import _03_intro_to_authenticated_APIs.data_transfer_objects.ApiExampleWrapper;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class NewsApiTest {
